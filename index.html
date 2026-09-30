@@ -2,47 +2,359 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BigFish AI — Your Personal Fishing Intelligence</title>
-<meta name="description" content="Snap your catch. Scan your spot. Let AI pick the perfect lure — every trip. BigFish AI is your personal fishing intelligence for iPhone.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BigFish AI — Fish Smarter, Catch More</title>
+<meta name="description" content="BigFish AI is the fishing app that learns your water. Scan spots to pick the right bait, log catches, and find your hotzones.">
+<meta name="theme-color" content="#020408">
+<link rel="canonical" href="https://thebigfish.app/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BigFish AI — Fish Smarter, Catch More">
+<meta property="og:description" content="Scan spots. Pick the right bait. Log catches. Find your hotzones.">
+<meta property="og:image" content="https://thebigfish.app/icon-1024.png">
+<meta property="og:url" content="https://thebigfish.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BigFish AI — Fish Smarter, Catch More">
+<meta name="twitter:description" content="Scan spots. Pick the right bait. Log catches. Find your hotzones.">
+<meta name="twitter:image" content="https://thebigfish.app/icon-1024.png">
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
 <style>
-  :root { --navy:#0a2947; --sky:#5cb5d6; --mist:#f5f9fb; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Rounded","Segoe UI",Roboto,sans-serif; color:var(--navy); background:#fff; }
-  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:48px 24px;
-          background:linear-gradient(180deg,#fff 0%,var(--mist) 100%); }
-  .wordmark { font-size:56px; letter-spacing:-1px; }
-  .wordmark b { font-weight:800; }
-  .wordmark span.fish { font-weight:500; }
-  .wordmark span.ai { font-size:26px; font-weight:800; color:var(--sky); margin-left:6px; }
-  .tagline { margin-top:18px; font-size:20px; color:rgba(10,41,71,.65); max-width:520px; line-height:1.5; }
-  .features { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-top:44px; max-width:900px; }
-  .card { background:#fff; border:1px solid rgba(10,41,71,.08); border-radius:18px; padding:24px; width:260px; text-align:left;
-          box-shadow:0 10px 30px rgba(10,41,71,.06); }
-  .card h3 { font-size:17px; margin-bottom:8px; }
-  .card p { font-size:14px; color:rgba(10,41,71,.6); line-height:1.5; }
-  .badge { display:inline-block; margin-top:48px; background:var(--navy); color:#fff; border-radius:14px; padding:16px 32px;
-           font-weight:700; font-size:17px; text-decoration:none; }
-  footer { padding:36px 24px; text-align:center; font-size:13px; color:rgba(10,41,71,.5); background:var(--mist); }
-  footer a { color:var(--sky); text-decoration:none; margin:0 10px; font-weight:600; }
+  :root {
+    --abyss: #020408;
+    --deep: #052029;
+    --midwater: #083240;
+    --teal: #0c698a;
+    --brand: #0078ae;
+    --sky: #269ec7;
+    --foam: #eff4f7;
+    --store-url: https://apps.apple.com/us/app/bigfish-ai/id6794939963;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden; /* no scrolling — one screen, one story */
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% 30%, rgba(12, 105, 138, 0.38) 0%, rgba(12, 105, 138, 0) 65%),
+      radial-gradient(ellipse 120% 80% at 50% 110%, rgba(4, 23, 32, 0.9) 0%, rgba(2, 4, 8, 0) 60%),
+      linear-gradient(180deg, #03080d 0%, #052029 34%, #083240 58%, #041720 82%, #020408 100%);
+    color: var(--foam);
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ---------- underwater scene ---------- */
+  .scene {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* god rays from the surface */
+  .ray {
+    position: absolute;
+    top: -12%;
+    width: 130px;
+    height: 75%;
+    background: linear-gradient(180deg, rgba(180, 230, 250, 0.14) 0%, rgba(180, 230, 250, 0.05) 45%, rgba(180, 230, 250, 0) 85%);
+    transform: skewX(-14deg);
+    filter: blur(6px);
+    border-radius: 0 0 50% 50%;
+    animation: ray-sway 11s ease-in-out infinite alternate;
+  }
+  .ray:nth-child(1) { left: 8%;  opacity: .8; }
+  .ray:nth-child(2) { left: 34%; width: 90px; animation-delay: -3s; animation-duration: 13s; opacity: .6; }
+  .ray:nth-child(3) { left: 58%; width: 170px; animation-delay: -7s; animation-duration: 9s;  opacity: .7; }
+  .ray:nth-child(4) { left: 82%; width: 80px; animation-delay: -5s; animation-duration: 14s; opacity: .5; }
+  @keyframes ray-sway {
+    from { transform: skewX(-14deg) translateX(-26px); opacity: .35; }
+    to   { transform: skewX(-10deg) translateX(26px);  opacity: .9; }
+  }
+
+  /* rising bubbles */
+  .bubble {
+    position: absolute;
+    bottom: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.03) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    8%   { opacity: .85; }
+    85%  { opacity: .5; }
+    100% { transform: translateY(-108vh) translateX(14px); opacity: 0; }
+  }
+
+  /* drifting background fish */
+  .bg-fish {
+    position: absolute;
+    opacity: 0.16;
+    filter: blur(1px);
+    animation: drift linear infinite;
+  }
+  @keyframes drift {
+    from { transform: translateX(30vw) scaleX(1); }
+    75%  { transform: translateX(-85vw) scaleX(1); }
+    76%  { transform: translateX(-85vw) scaleX(-1); }
+    to   { transform: translateX(30vw) scaleX(-1); }
+  }
+
+  /* ---------- layout ---------- */
+  .page {
+    position: relative;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    padding: 0 28px calc(20px + env(safe-area-inset-bottom));
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* hero fish */
+  .hero {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .hero svg {
+    width: min(78vw, 380px);
+    height: auto;
+    filter: drop-shadow(0 0 34px rgba(12, 105, 138, 0.65)) drop-shadow(0 18px 40px rgba(0, 0, 0, 0.55));
+    animation: swim 6.5s ease-in-out infinite;
+    transform-origin: 50% 50%;
+  }
+  @keyframes swim {
+    0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+    50%      { transform: translateY(-16px) rotate(1.4deg); }
+  }
+
+  /* wordmark */
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    font-size: clamp(38px, 11vw, 56px);
+    color: #fff;
+    text-shadow: 0 2px 30px rgba(12, 105, 138, 0.55);
+    line-height: 1;
+  }
+  .wordmark .ai {
+    font-size: 0.44em;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--sky);
+    transform: translateY(-0.45em);
+  }
+
+  .tagline {
+    margin-top: 14px;
+    font-size: clamp(11px, 3.1vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: #9fd8ee;
+    text-shadow: 0 0 18px rgba(38, 158, 199, 0.5);
+  }
+
+  /* CTAs */
+  .ctas {
+    margin-top: clamp(26px, 6.5vh, 44px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .btn-get {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: min(100%, 340px);
+    padding: 17px 20px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #0e7fae 0%, var(--brand) 55%, #065f88 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.14) inset,
+      0 0 34px rgba(12, 105, 138, 0.75),
+      0 14px 30px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-get:active { transform: scale(0.97); }
+  @media (hover: hover) {
+    .btn-get:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+        0 0 46px rgba(12, 105, 138, 0.95),
+        0 18px 34px rgba(0, 0, 0, 0.5);
+    }
+  }
+  .btn-get svg { width: 20px; height: 20px; }
+
+  .btn-store {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 22px 10px 16px;
+    border-radius: 12px;
+    background: #0a0c0f;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-store:active { transform: scale(0.97); }
+  @media (hover: hover) {
+    .btn-store:hover { border-color: rgba(255, 255, 255, 0.45); transform: translateY(-1px); }
+  }
+  .btn-store svg { width: 30px; height: 30px; flex: none; }
+  .btn-store .store-lines { text-align: left; line-height: 1.15; }
+  .btn-store .line-1 { display: block; font-size: 10px; letter-spacing: 0.04em; color: rgba(255,255,255,0.75); }
+  .btn-store .line-2 { display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.01em; }
+
+  /* footer */
+  .deep {
+    margin-top: clamp(20px, 5vh, 34px);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: rgba(239, 244, 247, 0.4);
+    animation: deep-pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes deep-pulse {
+    0%, 100% { opacity: 0.35; text-shadow: none; }
+    50%      { opacity: 0.85; text-shadow: 0 0 16px rgba(159, 216, 238, 0.6); }
+  }
+
+  /* short screens: tighten up */
+  @media (max-height: 640px) {
+    .hero svg { width: min(58vw, 260px); }
+    .ctas { margin-top: 18px; gap: 10px; }
+    .btn-get { padding: 13px 18px; font-size: 15px; }
+    .deep { margin-top: 14px; }
+  }
 </style>
 </head>
 <body>
-<section class="hero">
-  <div class="wordmark"><b>Big</b><span class="fish">Fish</span><span class="ai">AI</span></div>
-  <p class="tagline">Your personal fishing intelligence.<br>Snap the catch. Scan the water. Land the big one.</p>
-  <div class="features">
-    <div class="card"><h3>📷 Snap a Fish</h3><p>Photograph any catch and AI identifies the species, sizes it up, and hands you the full breakdown.</p></div>
-    <div class="card"><h3>🌊 Scan a Spot</h3><p>Point at the water. AI reads clarity, structure, and live weather — then tells you exactly what to throw.</p></div>
-    <div class="card"><h3>🔥 Private Hotzones</h3><p>Every catch builds your private heat map. Your spots stay secret — and your AI gets sharper every trip.</p></div>
+
+<div class="scene" aria-hidden="true">
+  <div class="ray"></div>
+  <div class="ray"></div>
+  <div class="ray"></div>
+  <div class="ray"></div>
+
+  <!-- background fish silhouettes -->
+  <svg class="bg-fish" style="top: 16%; left: -12%; width: 74px; animation-duration: 26s;" viewBox="0 0 240 120">
+    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
+  </svg>
+  <svg class="bg-fish" style="top: 34%; left: -18%; width: 46px; animation-duration: 34s; animation-delay: -12s; opacity: .12;" viewBox="0 0 240 120">
+    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
+  </svg>
+  <svg class="bg-fish" style="top: 8%; left: -8%; width: 34px; animation-duration: 42s; animation-delay: -25s; opacity: .1;" viewBox="0 0 240 120">
+    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
+  </svg>
+
+  <!-- bubbles -->
+  <span class="bubble" style="left: 12%; width: 10px; height: 10px; animation-duration: 11s; animation-delay: -2s;"></span>
+  <span class="bubble" style="left: 22%; width: 6px;  height: 6px;  animation-duration: 14s; animation-delay: -7s;"></span>
+  <span class="bubble" style="left: 38%; width: 14px; height: 14px; animation-duration: 12s; animation-delay: -4s;"></span>
+  <span class="bubble" style="left: 55%; width: 7px;  height: 7px;  animation-duration: 16s; animation-delay: -9s;"></span>
+  <span class="bubble" style="left: 68%; width: 11px; height: 11px; animation-duration: 10s; animation-delay: -1s;"></span>
+  <span class="bubble" style="left: 80%; width: 5px;  height: 5px;  animation-duration: 18s; animation-delay: -12s;"></span>
+  <span class="bubble" style="left: 90%; width: 9px;  height: 9px;  animation-duration: 13s; animation-delay: -6s;"></span>
+</div>
+
+<main class="page">
+
+  <div class="hero" aria-hidden="true">
+    <svg viewBox="0 0 240 120" role="img" aria-label="BigFish">
+      <defs>
+        <linearGradient id="fishBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset="0.65" stop-color="#d9eef6"/>
+          <stop offset="1" stop-color="#9fd8ee"/>
+        </linearGradient>
+        <linearGradient id="fishFin" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bfe6f5"/>
+          <stop offset="1" stop-color="#5db6d8"/>
+        </linearGradient>
+      </defs>
+      <!-- tail -->
+      <path d="M62 60 C42 40 22 30 8 16 C15 44 15 76 8 104 C22 90 42 80 62 60 Z" fill="url(#fishFin)"/>
+      <!-- body -->
+      <path d="M62 60 C86 24 142 19 178 45 C198 59 198 61 178 75 C142 101 86 96 62 60 Z" fill="url(#fishBody)"/>
+      <!-- dorsal fin -->
+      <path d="M108 31 C118 10 148 7 160 20 C142 20 122 25 108 31 Z" fill="url(#fishFin)"/>
+      <!-- ventral fin -->
+      <path d="M104 88 C110 100 122 104 132 100 C122 98 112 94 104 88 Z" fill="url(#fishFin)"/>
+      <!-- pectoral fin -->
+      <path d="M118 60 C134 66 141 82 130 94 C121 84 116 71 118 60 Z" fill="url(#fishFin)" opacity="0.9"/>
+      <!-- gill line -->
+      <path d="M148 40 C140 52 140 68 148 80" stroke="#062633" stroke-width="3.5" fill="none" opacity="0.3" stroke-linecap="round"/>
+      <!-- eye -->
+      <circle cx="163" cy="47" r="6.5" fill="#062633"/>
+      <circle cx="165.3" cy="44.8" r="2.2" fill="#ffffff"/>
+      <!-- lateral line -->
+      <path d="M78 58 C110 52 150 54 176 58" stroke="#062633" stroke-width="2" fill="none" opacity="0.14"/>
+    </svg>
   </div>
-  <a class="badge" href="#">Coming soon to the App Store</a>
-</section>
-<footer>
-  © 2026 BigFish AI ·
-  <a href="/terms/">Terms of Use</a> ·
-  <a href="/privacy/">Privacy Policy</a> ·
-  <a href="mailto:support@thebigfish.app">support@thebigfish.app</a>
-</footer>
+
+  <h1 class="wordmark">BIGFISH<span class="ai">AI</span></h1>
+  <p class="tagline">FISH SMARTER, CATCH MORE</p>
+
+  <div class="ctas">
+    <a class="btn-get" href="https://apps.apple.com/us/app/bigfish-ai/id6794939963" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2 L14.5 9 H21.5 L16 13.5 L18 20.5 L12 16.2 L6 20.5 L8 13.5 L2.5 9 H9.5 Z" fill="#ffffff"/>
+      </svg>
+      GET BIGFISH
+    </a>
+
+    <a class="btn-store" href="https://apps.apple.com/us/app/bigfish-ai/id6794939963" target="_blank" rel="noopener" aria-label="Download on the App Store">
+      <svg viewBox="0 0 384 512" aria-hidden="true"><!-- Apple logo -->
+        <path fill="#ffffff" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.1-136.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+      </svg>
+      <span class="store-lines">
+        <span class="line-1">Download on the</span>
+        <span class="line-2">App Store</span>
+      </span>
+    </a>
+  </div>
+
+  <p class="deep">TAP TO ENTER THE DEEP</p>
+
+</main>
+
 </body>
 </html>
