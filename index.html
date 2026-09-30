@@ -255,6 +255,115 @@
     .btn-get { padding: 13px 18px; font-size: 15px; }
     .deep { margin-top: 12px; }
   }
+
+  /* ---------- in-app browser helper overlay ---------- */
+  .help-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(2, 4, 8, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .help-overlay[hidden] { display: none; }
+
+  .help-card {
+    width: min(100%, 380px);
+    background: linear-gradient(180deg, #062430 0%, #041720 100%);
+    border: 1px solid rgba(38, 158, 199, 0.35);
+    border-radius: 22px;
+    padding: 30px 24px 24px;
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
+    position: relative;
+    animation: help-pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+  @keyframes help-pop {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+
+  .help-close {
+    position: absolute; top: 8px; right: 12px;
+    background: none; border: none;
+    color: rgba(239, 244, 247, 0.45);
+    font-size: 26px; line-height: 1;
+    padding: 8px; cursor: pointer;
+  }
+
+  .help-logo {
+    width: 52px; height: 52px;
+    margin: 0 auto 14px;
+    display: block;
+    filter: drop-shadow(0 0 16px rgba(38, 158, 199, 0.55));
+  }
+
+  .help-title { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.3; }
+  .help-title .app { color: #9fd8ee; }
+  .help-sub { margin-top: 8px; font-size: 13px; color: rgba(239, 244, 247, 0.6); }
+
+  .help-steps { margin: 20px auto 0; text-align: left; list-style: none; counter-reset: step; }
+  .help-steps li {
+    position: relative;
+    padding: 7px 0 7px 36px;
+    font-size: 14px;
+    color: rgba(239, 244, 247, 0.88);
+    counter-increment: step;
+  }
+  .help-steps li b { color: #fff; }
+  .help-steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 8px;
+    width: 23px; height: 23px;
+    border-radius: 50%;
+    background: rgba(12, 105, 138, 0.55);
+    color: #9fd8ee;
+    font-weight: 800; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .help-hold {
+    display: block;
+    margin-top: 20px;
+    padding: 16px 14px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #0e7fae 0%, var(--brand) 55%, #065f88 100%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.14) inset, 0 0 28px rgba(12, 105, 138, 0.65);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-size: 15px;
+  }
+  .help-hold small {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .help-hold:active { transform: scale(0.97); }
+
+  .help-row { display: flex; gap: 10px; margin-top: 12px; }
+  .help-mini {
+    flex: 1;
+    padding: 12px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .help-mini:active { transform: scale(0.97); }
+  .help-mini.done { border-color: rgba(38, 158, 199, 0.6); color: #9fd8ee; }
 </style>
 </head>
 <body>
@@ -306,6 +415,110 @@
   <p class="deep">TAP TO ENTER THE DEEP</p>
 
 </main>
+
+<!-- In-app browser helper: TikTok & friends block App Store links -->
+<div class="help-overlay" id="open-help" hidden role="dialog" aria-modal="true" aria-labelledby="help-title">
+  <div class="help-card">
+    <button class="help-close" id="help-close" aria-label="Close">&times;</button>
+    <img class="help-logo" src="logo-white.png" alt="">
+    <h2 class="help-title" id="help-title"><span class="app" id="help-app-name">TikTok</span>&rsquo;s browser blocks App&nbsp;Store links</h2>
+    <p class="help-sub">Not your fault &mdash; it&rsquo;s a <span id="help-app-name-2">TikTok</span> thing. Five-second fix:</p>
+    <ol class="help-steps">
+      <li><b>Press &amp; hold</b> the big button below</li>
+      <li>Tap <b>&ldquo;Open Link&rdquo;</b> in the menu</li>
+      <li>You&rsquo;re in &mdash; install BigFish&nbsp;AI</li>
+    </ol>
+    <a class="help-hold" id="help-hold" href="https://apps.apple.com/us/app/bigfish-ai/id6794939963" rel="noopener">
+      PRESS &amp; HOLD THIS BUTTON
+      <small>then tap &ldquo;Open Link&rdquo;</small>
+    </a>
+    <div class="help-row">
+      <button class="help-mini" id="help-copy" type="button">Copy App Store link</button>
+      <button class="help-mini" id="help-try" type="button">Try opening anyway</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var STORE_URL = "https://apps.apple.com/us/app/bigfish-ai/id6794939963";
+  var ua = (navigator.userAgent || "").toLowerCase();
+
+  /* Detect restrictive in-app browsers (the kind that block App Store links) */
+  var apps = [
+    ["TikTok",     /tiktok|bytedance|bytecode|musical_ly|trill|douyin/],
+    ["Instagram",  /instagram/],
+    ["Facebook",   /fbav|fban|fb_iab|facebook/],
+    ["Snapchat",   /snapchat/],
+    ["Threads",    /threads/],
+    ["X",          /twitter/],
+    ["Pinterest",  /pinterest/],
+    ["Reddit",     /reddit/],
+    ["LinkedIn",   /linkedin/],
+    ["WhatsApp",   /whatsapp/],
+    ["Discord",    /discord/]
+  ];
+  var appName = null;
+  for (var i = 0; i < apps.length; i++) {
+    if (apps[i][1].test(ua)) { appName = apps[i][0]; break; }
+  }
+  /* Generic webview fallbacks */
+  if (!appName && /iphone|ipod|ipad/.test(ua) && !/safari/.test(ua)) appName = "This app";
+  if (!appName && /android/.test(ua) && / wv\)/.test(ua)) appName = "This app";
+  if (!appName) return; /* normal browser — links work as-is */
+
+  var overlay = document.getElementById("open-help");
+  if (!overlay) return;
+
+  var nameEl = document.getElementById("help-app-name");
+  var nameEl2 = document.getElementById("help-app-name-2");
+  if (nameEl) nameEl.textContent = appName;
+  if (nameEl2) nameEl2.textContent = appName;
+
+  /* CTA taps inside TikTok's browser open the guide instead of the blocked URL */
+  var ctaLinks = document.querySelectorAll('main a[href="' + STORE_URL + '"]');
+  for (var j = 0; j < ctaLinks.length; j++) {
+    ctaLinks[j].addEventListener("click", function (e) {
+      e.preventDefault();
+      overlay.hidden = false;
+    });
+  }
+
+  document.getElementById("help-close").addEventListener("click", function () {
+    overlay.hidden = true;
+  });
+
+  document.getElementById("help-try").addEventListener("click", function () {
+    window.location.href = STORE_URL;
+  });
+
+  document.getElementById("help-copy").addEventListener("click", function () {
+    var btn = this;
+    function done() {
+      btn.textContent = "Link copied \u2713";
+      btn.classList.add("done");
+      btn.disabled = true;
+    }
+    function fallbackCopy() {
+      var t = document.createElement("textarea");
+      t.value = STORE_URL;
+      t.style.position = "fixed";
+      t.style.opacity = "0";
+      document.body.appendChild(t);
+      t.focus();
+      t.select();
+      try { document.execCommand("copy"); done(); } catch (err) {}
+      document.body.removeChild(t);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(STORE_URL).then(done, fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
