@@ -31,29 +31,28 @@
     --brand: #0078ae;
     --sky: #269ec7;
     --foam: #eff4f7;
-    --store-url: https://apps.apple.com/us/app/bigfish-ai/id6794939963;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
     height: 100%;
-    overflow: hidden; /* no scrolling — one screen, one story */
+    overflow: hidden; /* one screen, one story — no scrolling */
   }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background:
-      radial-gradient(ellipse 90% 55% at 50% 30%, rgba(12, 105, 138, 0.38) 0%, rgba(12, 105, 138, 0) 65%),
-      radial-gradient(ellipse 120% 80% at 50% 110%, rgba(4, 23, 32, 0.9) 0%, rgba(2, 4, 8, 0) 60%),
-      linear-gradient(180deg, #03080d 0%, #052029 34%, #083240 58%, #041720 82%, #020408 100%);
+      radial-gradient(ellipse 85% 50% at 50% 26%, rgba(12, 105, 138, 0.42) 0%, rgba(12, 105, 138, 0) 68%),
+      radial-gradient(ellipse 130% 90% at 50% 115%, rgba(4, 23, 32, 0.95) 0%, rgba(2, 4, 8, 0) 55%),
+      linear-gradient(180deg, #03080d 0%, #052029 36%, #083240 60%, #041720 84%, #020408 100%);
     color: var(--foam);
     -webkit-font-smoothing: antialiased;
     user-select: none;
     -webkit-user-select: none;
   }
 
-  /* ---------- underwater scene ---------- */
+  /* ---------- underwater atmosphere ---------- */
   .scene {
     position: fixed;
     inset: 0;
@@ -61,55 +60,39 @@
     pointer-events: none;
   }
 
-  /* god rays from the surface */
   .ray {
     position: absolute;
     top: -12%;
     width: 130px;
-    height: 75%;
-    background: linear-gradient(180deg, rgba(180, 230, 250, 0.14) 0%, rgba(180, 230, 250, 0.05) 45%, rgba(180, 230, 250, 0) 85%);
+    height: 72%;
+    background: linear-gradient(180deg, rgba(180, 230, 250, 0.12) 0%, rgba(180, 230, 250, 0.04) 45%, rgba(180, 230, 250, 0) 85%);
     transform: skewX(-14deg);
-    filter: blur(6px);
+    filter: blur(7px);
     border-radius: 0 0 50% 50%;
-    animation: ray-sway 11s ease-in-out infinite alternate;
+    animation: ray-sway 12s ease-in-out infinite alternate;
   }
-  .ray:nth-child(1) { left: 8%;  opacity: .8; }
-  .ray:nth-child(2) { left: 34%; width: 90px; animation-delay: -3s; animation-duration: 13s; opacity: .6; }
-  .ray:nth-child(3) { left: 58%; width: 170px; animation-delay: -7s; animation-duration: 9s;  opacity: .7; }
-  .ray:nth-child(4) { left: 82%; width: 80px; animation-delay: -5s; animation-duration: 14s; opacity: .5; }
+  .ray:nth-child(1) { left: 6%;  opacity: .75; }
+  .ray:nth-child(2) { left: 33%; width: 90px;  animation-delay: -3s; animation-duration: 14s; opacity: .55; }
+  .ray:nth-child(3) { left: 57%; width: 170px; animation-delay: -7s; animation-duration: 10s; opacity: .65; }
+  .ray:nth-child(4) { left: 83%; width: 80px;  animation-delay: -5s; animation-duration: 15s; opacity: .45; }
   @keyframes ray-sway {
-    from { transform: skewX(-14deg) translateX(-26px); opacity: .35; }
-    to   { transform: skewX(-10deg) translateX(26px);  opacity: .9; }
+    from { transform: skewX(-14deg) translateX(-24px); opacity: .3; }
+    to   { transform: skewX(-10deg) translateX(24px);  opacity: .85; }
   }
 
-  /* rising bubbles */
   .bubble {
     position: absolute;
     bottom: -30px;
     border-radius: 50%;
-    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.03) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.1) 42%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     animation: rise linear infinite;
   }
   @keyframes rise {
     0%   { transform: translateY(0) translateX(0); opacity: 0; }
-    8%   { opacity: .85; }
-    85%  { opacity: .5; }
+    8%   { opacity: .7; }
+    85%  { opacity: .4; }
     100% { transform: translateY(-108vh) translateX(14px); opacity: 0; }
-  }
-
-  /* drifting background fish */
-  .bg-fish {
-    position: absolute;
-    opacity: 0.16;
-    filter: blur(1px);
-    animation: drift linear infinite;
-  }
-  @keyframes drift {
-    from { transform: translateX(30vw) scaleX(1); }
-    75%  { transform: translateX(-85vw) scaleX(1); }
-    76%  { transform: translateX(-85vw) scaleX(-1); }
-    to   { transform: translateX(30vw) scaleX(-1); }
   }
 
   /* ---------- layout ---------- */
@@ -121,12 +104,12 @@
     align-items: center;
     justify-content: flex-end;
     text-align: center;
-    padding: 0 28px calc(20px + env(safe-area-inset-bottom));
+    padding: 0 28px calc(18px + env(safe-area-inset-bottom));
     max-width: 560px;
     margin: 0 auto;
   }
 
-  /* hero fish */
+  /* hero — the real BigFish logo */
   .hero {
     flex: 1 1 auto;
     min-height: 0;
@@ -135,16 +118,24 @@
     justify-content: center;
     width: 100%;
   }
-  .hero svg {
-    width: min(78vw, 380px);
-    height: auto;
-    filter: drop-shadow(0 0 34px rgba(12, 105, 138, 0.65)) drop-shadow(0 18px 40px rgba(0, 0, 0, 0.55));
-    animation: swim 6.5s ease-in-out infinite;
-    transform-origin: 50% 50%;
+  .hero .glow {
+    position: absolute;
+    width: min(90vw, 420px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(12, 105, 138, 0.5) 0%, rgba(12, 105, 138, 0.18) 45%, rgba(12, 105, 138, 0) 70%);
+    filter: blur(10px);
   }
-  @keyframes swim {
-    0%, 100% { transform: translateY(0) rotate(-1.2deg); }
-    50%      { transform: translateY(-16px) rotate(1.4deg); }
+  .hero img {
+    position: relative;
+    width: min(72vw, 330px);
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(38, 158, 199, 0.45)) drop-shadow(0 22px 44px rgba(0, 0, 0, 0.6));
+    animation: float 6.5s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-14px); }
   }
 
   /* wordmark */
@@ -180,7 +171,7 @@
 
   /* CTAs */
   .ctas {
-    margin-top: clamp(26px, 6.5vh, 44px);
+    margin-top: clamp(24px, 6vh, 42px);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -244,7 +235,7 @@
 
   /* footer */
   .deep {
-    margin-top: clamp(20px, 5vh, 34px);
+    margin-top: clamp(18px, 4.5vh, 30px);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.42em;
@@ -259,10 +250,10 @@
 
   /* short screens: tighten up */
   @media (max-height: 640px) {
-    .hero svg { width: min(58vw, 260px); }
-    .ctas { margin-top: 18px; gap: 10px; }
+    .hero img { width: min(52vw, 230px); }
+    .ctas { margin-top: 16px; gap: 10px; }
     .btn-get { padding: 13px 18px; font-size: 15px; }
-    .deep { margin-top: 14px; }
+    .deep { margin-top: 12px; }
   }
 </style>
 </head>
@@ -274,60 +265,20 @@
   <div class="ray"></div>
   <div class="ray"></div>
 
-  <!-- background fish silhouettes -->
-  <svg class="bg-fish" style="top: 16%; left: -12%; width: 74px; animation-duration: 26s;" viewBox="0 0 240 120">
-    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
-  </svg>
-  <svg class="bg-fish" style="top: 34%; left: -18%; width: 46px; animation-duration: 34s; animation-delay: -12s; opacity: .12;" viewBox="0 0 240 120">
-    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
-  </svg>
-  <svg class="bg-fish" style="top: 8%; left: -8%; width: 34px; animation-duration: 42s; animation-delay: -25s; opacity: .1;" viewBox="0 0 240 120">
-    <path d="M60 60 C40 40 20 30 8 18 C14 45 14 75 8 102 C20 90 40 80 60 60 Z M60 60 C85 25 140 20 175 45 C195 58 195 62 175 75 C140 100 85 95 60 60 Z" fill="#9fd8ee"/>
-  </svg>
-
-  <!-- bubbles -->
-  <span class="bubble" style="left: 12%; width: 10px; height: 10px; animation-duration: 11s; animation-delay: -2s;"></span>
-  <span class="bubble" style="left: 22%; width: 6px;  height: 6px;  animation-duration: 14s; animation-delay: -7s;"></span>
-  <span class="bubble" style="left: 38%; width: 14px; height: 14px; animation-duration: 12s; animation-delay: -4s;"></span>
-  <span class="bubble" style="left: 55%; width: 7px;  height: 7px;  animation-duration: 16s; animation-delay: -9s;"></span>
-  <span class="bubble" style="left: 68%; width: 11px; height: 11px; animation-duration: 10s; animation-delay: -1s;"></span>
-  <span class="bubble" style="left: 80%; width: 5px;  height: 5px;  animation-duration: 18s; animation-delay: -12s;"></span>
-  <span class="bubble" style="left: 90%; width: 9px;  height: 9px;  animation-duration: 13s; animation-delay: -6s;"></span>
+  <span class="bubble" style="left: 12%; width: 10px; height: 10px; animation-duration: 12s; animation-delay: -2s;"></span>
+  <span class="bubble" style="left: 24%; width: 6px;  height: 6px;  animation-duration: 15s; animation-delay: -7s;"></span>
+  <span class="bubble" style="left: 40%; width: 13px; height: 13px; animation-duration: 13s; animation-delay: -4s;"></span>
+  <span class="bubble" style="left: 57%; width: 7px;  height: 7px;  animation-duration: 17s; animation-delay: -9s;"></span>
+  <span class="bubble" style="left: 70%; width: 11px; height: 11px; animation-duration: 11s; animation-delay: -1s;"></span>
+  <span class="bubble" style="left: 84%; width: 5px;  height: 5px;  animation-duration: 19s; animation-delay: -12s;"></span>
+  <span class="bubble" style="left: 92%; width: 9px;  height: 9px;  animation-duration: 14s; animation-delay: -6s;"></span>
 </div>
 
 <main class="page">
 
-  <div class="hero" aria-hidden="true">
-    <svg viewBox="0 0 240 120" role="img" aria-label="BigFish">
-      <defs>
-        <linearGradient id="fishBody" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffffff"/>
-          <stop offset="0.65" stop-color="#d9eef6"/>
-          <stop offset="1" stop-color="#9fd8ee"/>
-        </linearGradient>
-        <linearGradient id="fishFin" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#bfe6f5"/>
-          <stop offset="1" stop-color="#5db6d8"/>
-        </linearGradient>
-      </defs>
-      <!-- tail -->
-      <path d="M62 60 C42 40 22 30 8 16 C15 44 15 76 8 104 C22 90 42 80 62 60 Z" fill="url(#fishFin)"/>
-      <!-- body -->
-      <path d="M62 60 C86 24 142 19 178 45 C198 59 198 61 178 75 C142 101 86 96 62 60 Z" fill="url(#fishBody)"/>
-      <!-- dorsal fin -->
-      <path d="M108 31 C118 10 148 7 160 20 C142 20 122 25 108 31 Z" fill="url(#fishFin)"/>
-      <!-- ventral fin -->
-      <path d="M104 88 C110 100 122 104 132 100 C122 98 112 94 104 88 Z" fill="url(#fishFin)"/>
-      <!-- pectoral fin -->
-      <path d="M118 60 C134 66 141 82 130 94 C121 84 116 71 118 60 Z" fill="url(#fishFin)" opacity="0.9"/>
-      <!-- gill line -->
-      <path d="M148 40 C140 52 140 68 148 80" stroke="#062633" stroke-width="3.5" fill="none" opacity="0.3" stroke-linecap="round"/>
-      <!-- eye -->
-      <circle cx="163" cy="47" r="6.5" fill="#062633"/>
-      <circle cx="165.3" cy="44.8" r="2.2" fill="#ffffff"/>
-      <!-- lateral line -->
-      <path d="M78 58 C110 52 150 54 176 58" stroke="#062633" stroke-width="2" fill="none" opacity="0.14"/>
-    </svg>
+  <div class="hero">
+    <div class="glow" aria-hidden="true"></div>
+    <img src="logo-white.png" alt="BigFish AI logo" draggable="false">
   </div>
 
   <h1 class="wordmark">BIGFISH<span class="ai">AI</span></h1>
